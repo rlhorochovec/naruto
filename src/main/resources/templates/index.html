@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>Naruto</title>
+<link th:href="@{/css/style.css}" rel="stylesheet" />
+</head>
+<body>
+	<div align="center">
+		<h1>Naruto</h1>
+		<h2><a href="/novo">Novo</a></h2>
+		<br />
+		<table>
+			<thead>
+				
+				<tr>
+					<th>Nome</th>
+					<th align="center">Editar</th>
+					<th align="center">Excluir</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="personagem : ${personagens}">
+					<td th:text="${personagem.nome}">Nome</td>
+					<td align="center"><a th:href="@{/editar/{id}(id=${personagem.id})}">Editar</a></td>
+					<td align="center"><a th:href="@{/excluir/{id}(id=${personagem.id})}">Excluir</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
