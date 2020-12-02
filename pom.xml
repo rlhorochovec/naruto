@@ -8,7 +8,7 @@
 		<version>2.4.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>br.rafaelhorochovec.spring</groupId>
+	<groupId>br.rafaelhorochovec</groupId>
 	<artifactId>naruto</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>naruto</name>
@@ -51,5 +51,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
