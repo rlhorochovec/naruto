@@ -1,4 +1,4 @@
-package br.rafaelhorochovec.spring.controller;
+package br.rafaelhorochovec.naruto.controller;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.rafaelhorochovec.spring.model.Vila;
-import br.rafaelhorochovec.spring.service.VilaService;
+import br.rafaelhorochovec.naruto.model.Vila;
+import br.rafaelhorochovec.naruto.service.VilaService;
 
 @Controller
 @RequestMapping("/vilas")

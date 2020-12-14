@@ -1,4 +1,4 @@
-package br.rafaelhorochovec.spring.service;
+package br.rafaelhorochovec.naruto.service;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.rafaelhorochovec.spring.model.Personagem;
-import br.rafaelhorochovec.spring.repository.PersonagemRepository;
+import br.rafaelhorochovec.naruto.model.Personagem;
+import br.rafaelhorochovec.naruto.repository.PersonagemRepository;
 
 @Service
 @Transactional

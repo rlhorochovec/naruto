@@ -1,4 +1,4 @@
-package br.rafaelhorochovec.spring;
+package br.rafaelhorochovec.naruto;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

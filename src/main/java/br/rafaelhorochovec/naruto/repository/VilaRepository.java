@@ -1,8 +1,8 @@
-package br.rafaelhorochovec.spring.repository;
+package br.rafaelhorochovec.naruto.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import br.rafaelhorochovec.spring.model.Vila;
+import br.rafaelhorochovec.naruto.model.Vila;
 
 public interface VilaRepository extends JpaRepository<Vila, Long> {
 

@@ -1,13 +1,9 @@
-package br.rafaelhorochovec.spring.model;
-
-import java.util.List;
+package br.rafaelhorochovec.naruto.model;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 @Entity
@@ -16,7 +12,6 @@ public class Vila {
 
 	private Long id;
 	private String nome;
-	private List<Personagem> personagens;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vila_seq")
@@ -34,14 +29,5 @@ public class Vila {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "vila")
-	public List<Personagem> getPersonagens() {
-		return personagens;
-	}
-
-	public void setPersonagens(List<Personagem> personagens) {
-		this.personagens = personagens;
 	}
 }

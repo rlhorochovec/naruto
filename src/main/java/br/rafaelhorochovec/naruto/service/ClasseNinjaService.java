@@ -1,4 +1,4 @@
-package br.rafaelhorochovec.spring.service;
+package br.rafaelhorochovec.naruto.service;
 
 import java.util.List;
 
@@ -6,25 +6,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.rafaelhorochovec.spring.model.Vila;
-import br.rafaelhorochovec.spring.repository.VilaRepository;
+import br.rafaelhorochovec.naruto.model.ClasseNinja;
+import br.rafaelhorochovec.naruto.repository.ClasseNinjaRepository;
 
 @Service
 @Transactional
-public class VilaService {
+public class ClasseNinjaService {
 	
 	@Autowired
-    private VilaRepository repo;
+    private ClasseNinjaRepository repo;
      
-    public List<Vila> listAll() {
+    public List<ClasseNinja> listAll() {
         return repo.findAll();
     }
      
-    public void save(Vila Vila) {
-        repo.save(Vila);
+    public void save(ClasseNinja ClasseNinja) {
+        repo.save(ClasseNinja);
     }
      
-    public Vila get(long id) {
+    public ClasseNinja get(long id) {
         return repo.findById(id).get();
     }
      

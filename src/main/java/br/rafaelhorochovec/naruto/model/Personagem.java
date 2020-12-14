@@ -1,4 +1,4 @@
-package br.rafaelhorochovec.spring.model;
+package br.rafaelhorochovec.naruto.model;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,7 +12,7 @@ import javax.persistence.SequenceGenerator;
 @Entity
 @SequenceGenerator(name = "personagem_seq", sequenceName = "personagem_seq", initialValue = 1, allocationSize = 1)
 public class Personagem {
-
+	
 	private Long id;
 	private String nome;
 	private ClasseNinja classe;
