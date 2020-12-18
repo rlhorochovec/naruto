@@ -7,14 +7,14 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-@SequenceGenerator(name = "classe_seq", sequenceName = "classe_seq", initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name = "classe_gen", sequenceName = "classe_seq", initialValue = 1, allocationSize = 1)
 public class ClasseNinja {
 	
 	private Long id;
 	private String nome;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "classe_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "classe_gen")
 	public Long getId() {
 		return id;
 	}

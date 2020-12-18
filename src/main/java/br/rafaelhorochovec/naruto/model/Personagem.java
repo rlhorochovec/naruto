@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-@SequenceGenerator(name = "personagem_seq", sequenceName = "personagem_seq", initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name = "personagem_gen", sequenceName = "personagem_seq", initialValue = 1, allocationSize = 1)
 public class Personagem {
 	
 	private Long id;
@@ -19,7 +19,7 @@ public class Personagem {
 	private Vila vila;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "personagem_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "personagem_gen")
 	public Long getId() {
 		return id;
 	}
