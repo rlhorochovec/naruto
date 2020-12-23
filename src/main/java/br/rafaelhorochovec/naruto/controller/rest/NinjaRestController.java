@@ -7,18 +7,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.rafaelhorochovec.naruto.model.Personagem;
-import br.rafaelhorochovec.naruto.repository.PersonagemRepository;
+import br.rafaelhorochovec.naruto.model.Ninja;
+import br.rafaelhorochovec.naruto.repository.NinjaRepository;
 
 @RestController
 @RequestMapping("/api")
-public class PersonagemRESTController {
+public class NinjaRestController {
 	
 	@Autowired
-	private PersonagemRepository personagemRepository;
+	private NinjaRepository ninjaRepository;
 
-	@GetMapping("/personagens")
-	public Page<Personagem> getPersonagens(Pageable pageable) {
-		return personagemRepository.findAll(pageable);
+	@GetMapping("/ninjas")
+	public Page<Ninja> getPersonagens(Pageable pageable) {
+		return ninjaRepository.findAll(pageable);
 	}
 }

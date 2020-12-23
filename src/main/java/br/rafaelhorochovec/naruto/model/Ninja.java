@@ -5,13 +5,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@SequenceGenerator(name = "personagem_gen", sequenceName = "personagem_seq", initialValue = 1, allocationSize = 1)
-public class Personagem {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Ninja {
 	
 	private Long id;
 	private String nome;
@@ -19,7 +19,7 @@ public class Personagem {
 	private Vila vila;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "personagem_gen")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
 	}
@@ -37,7 +37,6 @@ public class Personagem {
 	}
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "classe_id", nullable = true)
 	public ClasseNinja getClasse() {
 		return classe;
 	}
@@ -47,7 +46,6 @@ public class Personagem {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "vila_id", nullable = true)
 	public Vila getVila() {
 		return vila;
 	}

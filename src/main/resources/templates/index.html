@@ -8,8 +8,8 @@
 </head>
 <body>
 	<div align="center">
-		| <a href="/">Personagens</a> | <a href="/vilas/">Vilas</a> | <a href="/classes/">Classes Ninjas</a> |
-		<h1>Naruto | Personagens</h1>
+		| <a href="/">Ninjas</a> | <a href="/vilas/">Vilas</a> | <a href="/classes/">Classes Ninjas</a> |
+		<h1>Naruto | Ninjas</h1>
 		<h2><a href="/novo">Novo</a></h2>
 		<br />
 		<table>
@@ -24,12 +24,12 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="personagem : ${personagens}">
-					<td th:text="${personagem.nome}">Nome</td>
-					<td th:text="${personagem.classe.nome}">Classe Ninja</td>
-					<td th:text="${personagem.vila.nome}">Vila</td>
-					<td align="center"><a th:href="@{/editar/{id}(id=${personagem.id})}">Editar</a></td>
-					<td align="center"><a th:href="@{/excluir/{id}(id=${personagem.id})}">Excluir</a></td>
+				<tr th:each="ninja : ${ninjas}">
+					<td th:text="${ninja.nome}">Nome</td>
+					<td th:text="${ninja.classe.nome}">Classe Ninja</td>
+					<td th:text="${ninja.vila.nome}">Vila</td>
+					<td align="center"><a th:href="@{/editar/{id}(id=${ninja.id})}">Editar</a></td>
+					<td align="center"><a th:href="@{/excluir/{id}(id=${ninja.id})}">Excluir</a></td>
 				</tr>
 			</tbody>
 		</table>

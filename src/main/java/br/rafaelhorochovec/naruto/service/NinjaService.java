@@ -6,25 +6,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.rafaelhorochovec.naruto.model.Personagem;
-import br.rafaelhorochovec.naruto.repository.PersonagemRepository;
+import br.rafaelhorochovec.naruto.model.Ninja;
+import br.rafaelhorochovec.naruto.repository.NinjaRepository;
 
 @Service
 @Transactional
-public class PersonagemService {
+public class NinjaService {
 	
 	@Autowired
-    private PersonagemRepository repo;
+    private NinjaRepository repo;
      
-    public List<Personagem> listAll() {
+    public List<Ninja> listAll() {
         return repo.findAll();
     }
      
-    public void save(Personagem personagem) {
-        repo.save(personagem);
+    public void save(Ninja ninja) {
+        repo.save(ninja);
     }
      
-    public Personagem get(long id) {
+    public Ninja get(long id) {
         return repo.findById(id).get();
     }
      
