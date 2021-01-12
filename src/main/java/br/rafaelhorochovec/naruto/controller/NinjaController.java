@@ -33,18 +33,22 @@ public class NinjaController {
 	@RequestMapping("/")
 	public String viewHomePage(Model model) {
 		List<Ninja> ninjas = ninjaService.listAll();
+		List<ClasseNinja> classes = classeNinjaService.listAll();
+	    List<Vila> vilas = vilaService.listAll();
 		model.addAttribute("ninjas", ninjas);
-		model.addAttribute("classes", classeNinjaService.listAll());
-		model.addAttribute("vilas", vilaService.listAll());
+		model.addAttribute("classes", classes);
+		model.addAttribute("vilas", vilas);
 		return "index";
 	}
 
 	@RequestMapping("/novo")
 	public String showNewNinjaPage(Model model) {
 		Ninja ninja = new Ninja();
+		List<ClasseNinja> classes = classeNinjaService.listAll();
+	    List<Vila> vilas = vilaService.listAll();
 		model.addAttribute("ninja", ninja);
-		model.addAttribute("classes", classeNinjaService.listAll());
-		model.addAttribute("vilas", vilaService.listAll());
+		model.addAttribute("classes", classes);
+		model.addAttribute("vilas", vilas);
 		return "novo-ninja";
 	}
 
