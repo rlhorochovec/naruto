@@ -32,7 +32,8 @@ public class ClasseNinjaController {
 	public String showNewClasseNinjaPage(Model model) {
 		ClasseNinja classe = new ClasseNinja();
 		model.addAttribute("classe", classe);
-		return "nova-classe";
+		model.addAttribute("titulo", "Nova Classe Ninja");
+		return "classe_form";
 	}
 
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
@@ -42,8 +43,9 @@ public class ClasseNinjaController {
 	}
 	
 	@RequestMapping("/editar/{id}")
-	public ModelAndView showEditClasseNinjaPage(@PathVariable(name = "id") Long id) {
-	    ModelAndView mav = new ModelAndView("editar-classe");
+	public ModelAndView showEditClasseNinjaPage(@PathVariable(name = "id") Long id, Model model) {
+		model.addAttribute("titulo", "Editar Classe Ninja (ID: " + id + ")");
+	    ModelAndView mav = new ModelAndView("classe_form");
 	    ClasseNinja classe = classeNinjaService.get(id);
 	    mav.addObject("classe", classe);
 	    return mav;

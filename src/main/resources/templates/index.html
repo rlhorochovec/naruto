@@ -1,38 +1,103 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="utf-8" />
-<title>Naruto</title>
-<link th:href="@{/css/style.css}" rel="stylesheet" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
+	<title>Naruto</title>
+
+	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+		  integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+		  crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
 <body>
-	<div align="center">
-		| <a href="/">Ninjas</a> | <a href="/vilas/">Vilas</a> | <a href="/classes/">Classes Ninjas</a> |
-		<h1>Naruto | Ninjas</h1>
-		<h2><a href="/novo">Novo</a></h2>
-		<br />
-		<table>
-			<thead>
-				
-				<tr>
-					<th>Nome</th>
-					<th>Classe Ninja</th>
-					<th>Vila</th>
-					<th align="center">Editar</th>
-					<th align="center">Excluir</th>
-				</tr>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container-fluid" style="max-width: 900px; margin: 0 auto;">
+	<h2 class="text-center">Naruto</h2>
+
+	<div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center message"
+		 role="alert">
+		[[${message}]]
+		<button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+
+	<div th:if="${ninjas.size() > 0}">
+		<table class="table table-hover table-responsive-xl">
+			<thead class="thead-light">
+			<tr>
+				<th scope="col">Id</th>
+				<th scope="col">Nome</th>
+				<th scope="col">Classe</th>
+				<th scope="col">Vila</th>
+				<th scope="col">Açoes</th>
+			</tr>
 			</thead>
 			<tbody>
-				<tr th:each="ninja : ${ninjas}">
-					<td th:text="${ninja.nome}">Nome</td>
-					<td th:text="${ninja.classe.nome}">Classe Ninja</td>
-					<td th:text="${ninja.vila.nome}">Vila</td>
-					<td align="center"><a th:href="@{/editar/{id}(id=${ninja.id})}">Editar</a></td>
-					<td align="center"><a th:href="@{/excluir/{id}(id=${ninja.id})}">Excluir</a></td>
-				</tr>
+			<tr th:each="ninja : ${ninjas}">
+				<th scope="row">[[${ninja.id}]]</th>
+				<td>[[${ninja.nome}]]</td>
+				<td>[[${ninja.classe.nome}]]</td>
+				<td>[[${ninja.vila.nome}]]</td>
+				<td>
+					<a th:href="@{/editar/{id}(id=${ninja.id})}" title="Editar"
+					   class="fa-regular fa-pen-to-square icon-dark"></a>
+					&nbsp;
+					<a th:href="@{/excluir/{id}(id=${ninja.id})}" th:ninjaNome="${ninja.nome}" id="btnDelete"
+					   title="Excluir" class="fa-regular fa-trash-can icon-dark btn-delete"></a>
+				</td>
+			</tr>
 			</tbody>
 		</table>
 	</div>
+
+	<div class="" th:unless="${ninjas.size() > 0}">
+		<span>Não há ninjas para exibir na lista.</span>
+	</div>
+</div>
+
+<div class="modal fade text-center" id="confirmModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Confirme</h5>
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<div class="modal-body">
+				<span id="confirmText"></span>
+			</div>
+
+			<div class="modal-footer">
+				<a type="button" id="yesBtn" class="btn btn-danger">Yes</a>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+      $(".btn-delete").on("click", function (e) {
+        e.preventDefault();
+        link = $(this);
+
+        ninjaNome = link.attr("ninjaNome");
+        $("#yesBtn").attr("href", link.attr("href"));
+        $("#confirmText").html("Tem certeza que deseja excluir o ninja \<strong\>" + ninjaNome + "\<\/strong\>?");
+        $("#confirmModal").modal();
+      });
+    });
+  </script>
 </body>
 </html>
