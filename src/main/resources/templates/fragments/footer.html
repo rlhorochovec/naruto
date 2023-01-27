@@ -1,0 +1,6 @@
+<footer class="text-center">
+    <div th:fragment="footer" th:align="center">
+        &copy; <span th:text="${#temporals.format(#temporals.createNow(), 'yyyy')}"></span>
+        <span>Rafael Horochovec</span>
+    </div>
+</footer>

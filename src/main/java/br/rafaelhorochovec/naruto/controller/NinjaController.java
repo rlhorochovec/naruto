@@ -49,7 +49,8 @@ public class NinjaController {
 		model.addAttribute("ninja", ninja);
 		model.addAttribute("classes", classes);
 		model.addAttribute("vilas", vilas);
-		return "novo-ninja";
+		model.addAttribute("titulo", "Novo Ninja");
+		return "ninja_form";
 	}
 
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
@@ -59,8 +60,9 @@ public class NinjaController {
 	}
 	
 	@RequestMapping("/editar/{id}")
-	public ModelAndView showEditNinjaPage(@PathVariable(name = "id") Long id) {
-	    ModelAndView mav = new ModelAndView("editar-ninja");
+	public ModelAndView showEditNinjaPage(@PathVariable(name = "id") Long id, Model model) {
+		model.addAttribute("titulo", "Editar Ninja (ID: " + id + ")");
+	    ModelAndView mav = new ModelAndView("ninja_form");
 	    Ninja ninja = ninjaService.get(id);
 	    List<ClasseNinja> classes = classeNinjaService.listAll();
 	    List<Vila> vilas = vilaService.listAll();

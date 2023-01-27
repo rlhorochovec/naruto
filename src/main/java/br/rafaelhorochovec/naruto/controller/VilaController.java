@@ -32,7 +32,8 @@ public class VilaController {
 	public String showNewVilaPage(Model model) {
 		Vila vila = new Vila();
 		model.addAttribute("vila", vila);
-		return "nova-vila";
+		model.addAttribute("titulo", "Nova Vila");
+		return "vila_form";
 	}
 
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
@@ -42,8 +43,9 @@ public class VilaController {
 	}
 	
 	@RequestMapping("/editar/{id}")
-	public ModelAndView showEditVilaPage(@PathVariable(name = "id") Long id) {
-	    ModelAndView mav = new ModelAndView("editar-vila");
+	public ModelAndView showEditVilaPage(@PathVariable(name = "id") Long id, Model model) {
+		model.addAttribute("titulo", "Editar Vila (ID: " + id + ")");
+	    ModelAndView mav = new ModelAndView("vila_form");
 	    Vila vila = vilaService.get(id);
 	    mav.addObject("vila", vila);
 	    return mav;
