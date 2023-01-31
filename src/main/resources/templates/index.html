@@ -17,8 +17,8 @@
 <body>
 <div th:replace="fragments/header :: header"></div>
 
-<div class="container-fluid" style="max-width: 900px; margin: 0 auto;">
-	<h2 class="text-center">Naruto</h2>
+<div class="container-fluid" style="margin: 0 auto;">
+	<img th:src="@{/img/naruto.png}" style="max-width: 20%; padding: 10px" />
 
 	<div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center message"
 		 role="alert">
@@ -32,20 +32,18 @@
 		<table class="table table-hover table-responsive-xl">
 			<thead class="thead-light">
 			<tr>
-				<th scope="col">Id</th>
 				<th scope="col">Nome</th>
 				<th scope="col">Classe</th>
 				<th scope="col">Vila</th>
-				<th scope="col">Açoes</th>
+				<th scope="col" class="text-center">Ações</th>
 			</tr>
 			</thead>
 			<tbody>
 			<tr th:each="ninja : ${ninjas}">
-				<th scope="row">[[${ninja.id}]]</th>
-				<td>[[${ninja.nome}]]</td>
+				<th scope="row">[[${ninja.nome}]]</th>
 				<td>[[${ninja.classe.nome}]]</td>
 				<td>[[${ninja.vila.nome}]]</td>
-				<td>
+				<td class="text-center">
 					<a th:href="@{/editar/{id}(id=${ninja.id})}" title="Editar"
 					   class="fa-regular fa-pen-to-square icon-dark"></a>
 					&nbsp;
