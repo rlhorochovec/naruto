@@ -4,7 +4,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
-	<title>Naruto</title>
+	<title>Naruto - Spring Boot Thymeleaf</title>
 
 	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
@@ -14,15 +14,16 @@
 	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
+
 <body>
 <div th:replace="fragments/header :: header"></div>
 
-<div class="container-fluid" style="margin: 0 auto;">
-	<img th:src="@{/img/naruto.png}" style="max-width: 20%; padding: 10px" />
+<div class="container-fluid" style="max-width: 1000px; margin: 0 auto;">
+	<h2 class="text-center">[[${titulo}]]</h2>
 
-	<div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center message"
+	<div th:if="${mensagem != null}" class="alert alert-success alert-dismissible fade show text-center message"
 		 role="alert">
-		[[${message}]]
+		[[${mensagem}]]
 		<button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 		</button>
@@ -32,18 +33,20 @@
 		<table class="table table-hover table-responsive-xl">
 			<thead class="thead-light">
 			<tr>
+				<th scope="col">ID</th>
 				<th scope="col">Nome</th>
 				<th scope="col">Classe</th>
 				<th scope="col">Vila</th>
-				<th scope="col" class="text-center">Ações</th>
+				<th scope="col">Ações</th>
 			</tr>
 			</thead>
 			<tbody>
 			<tr th:each="ninja : ${ninjas}">
-				<th scope="row">[[${ninja.nome}]]</th>
+				<th scope="row">[[${ninja.id}]]</th>
+				<td>[[${ninja.nome}]]</td>
 				<td>[[${ninja.classe.nome}]]</td>
 				<td>[[${ninja.vila.nome}]]</td>
-				<td class="text-center">
+				<td>
 					<a th:href="@{/editar/{id}(id=${ninja.id})}" title="Editar"
 					   class="fa-regular fa-pen-to-square icon-dark"></a>
 					&nbsp;
@@ -56,7 +59,7 @@
 	</div>
 
 	<div class="" th:unless="${ninjas.size() > 0}">
-		<span>Não há ninjas para exibir na lista.</span>
+		<span>Não há registros.</span>
 	</div>
 </div>
 
@@ -75,8 +78,8 @@
 			</div>
 
 			<div class="modal-footer">
-				<a type="button" id="yesBtn" class="btn btn-danger">Yes</a>
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+				<a type="button" id="yesBtn" class="btn btn-danger">Sim</a>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
 			</div>
 		</div>
 	</div>
@@ -92,10 +95,17 @@
 
         ninjaNome = link.attr("ninjaNome");
         $("#yesBtn").attr("href", link.attr("href"));
-        $("#confirmText").html("Tem certeza que deseja excluir o ninja \<strong\>" + ninjaNome + "\<\/strong\>?");
+        $("#confirmText").html("Tem certeza que deseja excluir \<strong\>" + ninjaNome + "\<\/strong\>?");
         $("#confirmModal").modal();
+      });
+
+      $("#btnClear").on("click", function (e) {
+        e.preventDefault();
+        $("#keyword").text("");
+        window.location = "[[@{/}]]";
       });
     });
   </script>
+
 </body>
 </html>

@@ -23,6 +23,7 @@ public class VilaController {
 
 	@RequestMapping("/")
 	public String viewHomePage(Model model) {
+		model.addAttribute("titulo", "Vilas");
 		List<Vila> vilas = vilaService.listAll();
 		model.addAttribute("vilas", vilas);
 		return "vilas";
