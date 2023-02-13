@@ -1,37 +1,29 @@
 <header th:fragment="header">
-    <nav class="navbar navbar-icon-top navbar-expand-lg navbar-light" style="background-color: #FFC300;">
-        <a class="navbar-brand" href="#">Naruto</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <a class="navbar-brand" th:href="@{/}">
+            Naruto
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
+        <div class="collapse navbar-collapse" id="topNavbar">
+            <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/}">
-                        <i class="fa fa-user-circle"></i>
-                        Ninjas
-                    </a>
+                    <a class="nav-link" th:href="@{/}">Ninjas </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/classes/}">
-                        <i class="fa fa-address-card"></i>
-                        Classes
-                    </a>
+                    <a class="nav-link" th:href="@{/classes/}">Classes </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/vilas/}">
-                        <i class="fa fa-map"></i>
-                        Vilas
-                    </a>
+                    <a class="nav-link" th:href="@{/vilas/}">Vilas </a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-plus"></i>
-                        Novo
+                        Novo(a)
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" th:href="@{/novo}">Ninja</a>
+                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" th:href="@{/classes/nova}">Classe</a>
                         <a class="dropdown-item" th:href="@{/vilas/nova}">Vila</a>
                     </div>

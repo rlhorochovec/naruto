@@ -32,6 +32,7 @@ public class NinjaController {
 
 	@RequestMapping("/")
 	public String viewHomePage(Model model) {
+		model.addAttribute("titulo", "Ninjas");
 		List<Ninja> ninjas = ninjaService.listAll();
 		List<ClasseNinja> classes = classeNinjaService.listAll();
 	    List<Vila> vilas = vilaService.listAll();
