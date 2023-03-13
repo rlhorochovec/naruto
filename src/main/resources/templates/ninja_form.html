@@ -21,7 +21,7 @@
 	<h2 class="text-center">[[${titulo}]]</h2>
 
 	<div class="my-3">
-		<form th:action="@{/salvar}" method="post" enctype="multipart/form-data" th:object="${ninja}"
+		<form th:action="@{/ninjas/salvar}" method="post" enctype="multipart/form-data" th:object="${ninja}"
 			  style="max-width: 550px; margin: 0 auto">
 
 			<input type="hidden" th:field="*{id}" />
@@ -67,7 +67,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
       $("#btnCancel").on("click", function () {
-        window.location = "[[@{/}]]";
+        window.location = "[[@{/ninjas/}]]";
       });
     });
   </script>

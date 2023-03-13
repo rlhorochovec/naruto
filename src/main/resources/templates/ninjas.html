@@ -47,10 +47,10 @@
 				<td>[[${ninja.classe.nome}]]</td>
 				<td>[[${ninja.vila.nome}]]</td>
 				<td>
-					<a th:href="@{/editar/{id}(id=${ninja.id})}" title="Editar"
+					<a th:href="@{/ninjas/editar/{id}(id=${ninja.id})}" title="Editar"
 					   class="fa-regular fa-pen-to-square icon-dark"></a>
 					&nbsp;
-					<a th:href="@{/excluir/{id}(id=${ninja.id})}" th:ninjaNome="${ninja.nome}" id="btnDelete"
+					<a th:href="@{/ninjas/excluir/{id}(id=${ninja.id})}" th:ninjaNome="${ninja.nome}" id="btnDelete"
 					   title="Excluir" class="fa-regular fa-trash-can icon-dark btn-delete"></a>
 				</td>
 			</tr>
@@ -102,7 +102,7 @@
       $("#btnClear").on("click", function (e) {
         e.preventDefault();
         $("#keyword").text("");
-        window.location = "[[@{/}]]";
+        window.location = "[[@{/ninjas}]]";
       });
     });
   </script>
