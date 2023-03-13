@@ -19,6 +19,7 @@ import br.rafaelhorochovec.naruto.service.NinjaService;
 import br.rafaelhorochovec.naruto.service.VilaService;
 
 @Controller
+@RequestMapping("/ninjas")
 public class NinjaController {
 
 	@Autowired
@@ -39,7 +40,7 @@ public class NinjaController {
 		model.addAttribute("ninjas", ninjas);
 		model.addAttribute("classes", classes);
 		model.addAttribute("vilas", vilas);
-		return "index";
+		return "ninjas";
 	}
 
 	@RequestMapping("/novo")
@@ -57,7 +58,7 @@ public class NinjaController {
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
 	public String saveNinja(@ModelAttribute("ninja") Ninja ninja) {
 		ninjaService.save(ninja);
-		return "redirect:/";
+		return "redirect:/ninjas/";
 	}
 	
 	@RequestMapping("/editar/{id}")
@@ -76,6 +77,6 @@ public class NinjaController {
 	@RequestMapping("/excluir/{id}")
 	public String deleteNinja(@PathVariable(name = "id") Long id) {
 	    ninjaService.delete(id);
-	    return "redirect:/";       
+	    return "redirect:/ninjas/";
 	}
 }
