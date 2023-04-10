@@ -4,7 +4,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
-	<title>Naruto - Spring Boot Thymeleaf</title>
+	<title>Naruto - Spring Boot Thymeleaf Pagination example</title>
 
 	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
@@ -18,22 +18,49 @@
 <body>
 <div th:replace="fragments/header :: header"></div>
 
-<div class="container-fluid" style="max-width: 600px; margin: 0 auto;">
-	<h2 class="text-center">[[${titulo}]]</h2>
+<div class="container-fluid" style="max-width: 900px; margin: 0 auto;">
+	<h2 class="text-center">Vilas</h2>
 
-	<div th:if="${mensagem != null}" class="alert alert-success alert-dismissible fade show text-center message"
+	<div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center message"
 		 role="alert">
-		[[${mensagem}]]
+		[[${message}]]
 		<button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 		</button>
+	</div>
+
+	<div class="my-3">
+		<form th:action="@{/vilas}" id="searchForm">
+			<div class="row d-flex">
+				<div class="col-md-6 mt-2">
+					<div class="search">
+						<i class="fa fa-search"></i>
+						<input id="keyword" type="search" name="keyword" th:value="${keyword}" required class="form-control"
+							   placeholder="Pesquisar">
+						<button type="submit" class="btn btn-secondary">Buscar</button>
+					</div>
+				</div>
+				<div class="col-md-3 input-group mt-2">
+					<div class="input-group-prepend">
+						<label class="input-group-text" for="pageSize">Itens:</label>
+					</div>
+					<select form="searchForm" name="size" th:value="${pageSize}" onchange="changePageSize()" class="size-select"
+							id="pageSize">
+						<option th:each="s : ${ {3, 6, 9} }" th:value="${s}" th:text="${s}" th:selected="${s == pageSize}"></option>
+					</select>
+				</div>
+				<div class="col-md-1 mt-2">
+					<button id="btnClear" class="btn btn-info">Limpar</button>
+				</div>
+			</div>
+		</form>
 	</div>
 
 	<div th:if="${vilas.size() > 0}">
 		<table class="table table-hover table-responsive-xl">
 			<thead class="thead-light">
 			<tr>
-				<th scope="col">ID</th>
+				<th scope="col">Id</th>
 				<th scope="col">Nome</th>
 				<th scope="col">Ações</th>
 			</tr>
@@ -43,20 +70,47 @@
 				<th scope="row">[[${vila.id}]]</th>
 				<td>[[${vila.nome}]]</td>
 				<td>
-					<a th:href="@{/vilas/editar/{id}(id=${vila.id})}" title="Editar"
+					<a th:href="@{'/vilas/' + ${vila.id}}" title="Edit this vila"
 					   class="fa-regular fa-pen-to-square icon-dark"></a>
 					&nbsp;
-					<a th:href="@{/vilas/excluir/{id}(id=${vila.id})}" th:vilaNome="${vila.nome}" id="btnDelete"
-					   title="Excluir" class="fa-regular fa-trash-can icon-dark btn-delete"></a>
+					<a th:href="@{'/vilas/delete/' + ${vila.id}}" th:vilaNome="${vila.nome}" id="btnDelete"
+					   title="Delete this vila" class="fa-regular fa-trash-can icon-dark btn-delete"></a>
 				</td>
 			</tr>
 			</tbody>
 		</table>
 	</div>
 
-	<div class="" th:unless="${vilas.size() > 0}">
-		<span>Não há registros.</span>
+	<div th:unless="${vilas.size() > 0}">
+		<span>Não há registros a serem exibidos.</span>
 	</div>
+
+	<nav aria-label="Pagination" th:if="${totalPages > 0}">
+		<ul class="pagination justify-content-center">
+			<li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+				<a th:replace="fragments/paging/vilas :: pagingVille(1, '<<', 'First Page')"></a>
+			</li>
+			<li class="page-item font-weight-bold" th:classappend="${currentPage == 1} ? 'disabled'">
+				<a th:replace="fragments/paging/vilas :: pagingVille(${currentPage - 1}, 'Ant', 'Página anterior')"></a>
+			</li>
+			<li class="page-item disabled" th:if="${currentPage - 2 > 1}">
+				<a class="page-link" href="#">...</a>
+			</li>
+			<li class="page-item" th:classappend="${page == currentPage} ? 'active'"
+				th:each="page : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1, currentPage + 2 < totalPages ? currentPage + 2 : totalPages)}">
+				<a th:replace="fragments/paging/vilas :: pagingVille(${page}, ${page}, 'Page ' + ${page})"></a>
+			</li>
+			<li class="page-item disabled" th:if="${currentPage + 2 < totalPages}">
+				<a class="page-link" href="#">...</a>
+			</li>
+			<li class="page-item font-weight-bold" th:classappend="${currentPage == totalPages} ? 'disabled'">
+				<a th:replace="fragments/paging/vilas :: pagingVille(${currentPage + 1},'Próx', 'Próxima página')"></a>
+			</li>
+			<li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+				<a th:replace="fragments/paging/vilas :: pagingVille(${totalPages}, '>>', 'Last Page')"></a>
+			</li>
+		</ul>
+	</nav>
 </div>
 
 <div class="modal fade text-center" id="confirmModal">
@@ -91,17 +145,21 @@
 
         vilaNome = link.attr("vilaNome");
         $("#yesBtn").attr("href", link.attr("href"));
-        $("#confirmText").html("Tem certeza que deseja excluir \<strong\>" + vilaNome + "\<\/strong\>?");
+        $("#confirmText").html("Deseja excluir a vila \<strong\>" + vilaNome + "\<\/strong\>?");
         $("#confirmModal").modal();
       });
 
       $("#btnClear").on("click", function (e) {
         e.preventDefault();
         $("#keyword").text("");
-        window.location = "[[@{/vilas/}]]";
+        window.location = "[[@{/vilas}]]";
       });
     });
-  </script>
 
+    function changePageSize() {
+      $("#searchForm").submit();
+    }
+  </script>
 </body>
+
 </html>

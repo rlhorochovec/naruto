@@ -19,7 +19,7 @@
 <div th:replace="fragments/header :: header"></div>
 
 <div class="container-fluid" style="max-width: 900px; margin: 0 auto;">
-	<h2 class="text-center">Ninjas</h2>
+	<h2 class="text-center">Classificações</h2>
 
 	<div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center message"
 		 role="alert">
@@ -30,7 +30,7 @@
 	</div>
 
 	<div class="my-3">
-		<form th:action="@{/ninjas}" id="searchForm">
+		<form th:action="@{/classificacoes}" id="searchForm">
 			<div class="row d-flex">
 				<div class="col-md-6 mt-2">
 					<div class="search">
@@ -56,62 +56,58 @@
 		</form>
 	</div>
 
-	<div th:if="${ninjas.size() > 0}">
+	<div th:if="${classificacoes.size() > 0}">
 		<table class="table table-hover table-responsive-xl">
 			<thead class="thead-light">
 			<tr>
 				<th scope="col">Id</th>
 				<th scope="col">Nome</th>
-				<th scope="col">Classificação</th>
-				<th scope="col">Vila</th>
 				<th scope="col">Ações</th>
 			</tr>
 			</thead>
 			<tbody>
-			<tr th:each="ninja : ${ninjas}">
-				<th scope="row">[[${ninja.id}]]</th>
-				<td>[[${ninja.nome}]]</td>
-				<td>[[${ninja.classificacao.nome}]]</td>
-				<td>[[${ninja.vila.nome}]]</td>
+			<tr th:each="classificacao : ${classificacoes}">
+				<th scope="row">[[${classificacao.id}]]</th>
+				<td>[[${classificacao.nome}]]</td>
 				<td>
-					<a th:href="@{'/ninjas/' + ${ninja.id}}" title="Edit this ninja"
+					<a th:href="@{'/classificacoes/' + ${classificacao.id}}" title="Edit this classificacao"
 					   class="fa-regular fa-pen-to-square icon-dark"></a>
 					&nbsp;
-					<a th:href="@{'/ninjas/delete/' + ${ninja.id}}" th:ninjaNome="${ninja.nome}" id="btnDelete"
-					   title="Delete this ninja" class="fa-regular fa-trash-can icon-dark btn-delete"></a>
+					<a th:href="@{'/classificacoes/delete/' + ${classificacao.id}}" th:classificacaoNome="${classificacao.nome}" id="btnDelete"
+					   title="Delete this classificacao" class="fa-regular fa-trash-can icon-dark btn-delete"></a>
 				</td>
 			</tr>
 			</tbody>
 		</table>
 	</div>
 
-	<div th:unless="${ninjas.size() > 0}">
+	<div th:unless="${classificacoes.size() > 0}">
 		<span>Não há registros a serem exibidos.</span>
 	</div>
 
 	<nav aria-label="Pagination" th:if="${totalPages > 0}">
 		<ul class="pagination justify-content-center">
 			<li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
-				<a th:replace="fragments/paging/ninjas :: pagingNinja(1, '<<', 'First Page')"></a>
+				<a th:replace="fragments/paging/classificacoes :: pagingClassification(1, '<<', 'First Page')"></a>
 			</li>
 			<li class="page-item font-weight-bold" th:classappend="${currentPage == 1} ? 'disabled'">
-				<a th:replace="fragments/paging/ninjas :: pagingNinja(${currentPage - 1}, 'Ant', 'Página anterior')"></a>
+				<a th:replace="fragments/paging/classificacoes :: pagingClassification(${currentPage - 1}, 'Ant', 'Página anterior')"></a>
 			</li>
 			<li class="page-item disabled" th:if="${currentPage - 2 > 1}">
 				<a class="page-link" href="#">...</a>
 			</li>
 			<li class="page-item" th:classappend="${page == currentPage} ? 'active'"
 				th:each="page : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1, currentPage + 2 < totalPages ? currentPage + 2 : totalPages)}">
-				<a th:replace="fragments/paging/ninjas :: pagingNinja(${page}, ${page}, 'Page ' + ${page})"></a>
+				<a th:replace="fragments/paging/classificacoes :: pagingClassification(${page}, ${page}, 'Page ' + ${page})"></a>
 			</li>
 			<li class="page-item disabled" th:if="${currentPage + 2 < totalPages}">
 				<a class="page-link" href="#">...</a>
 			</li>
 			<li class="page-item font-weight-bold" th:classappend="${currentPage == totalPages} ? 'disabled'">
-				<a th:replace="fragments/paging/ninjas :: pagingNinja(${currentPage + 1},'Próx', 'Próxima página')"></a>
+				<a th:replace="fragments/paging/classificacoes :: pagingClassification(${currentPage + 1},'Próx', 'Próxima página')"></a>
 			</li>
 			<li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
-				<a th:replace="fragments/paging/ninjas :: pagingNinja(${totalPages}, '>>', 'Last Page')"></a>
+				<a th:replace="fragments/paging/classificacoes :: pagingClassification(${totalPages}, '>>', 'Last Page')"></a>
 			</li>
 		</ul>
 	</nav>
@@ -147,16 +143,16 @@
         e.preventDefault();
         link = $(this);
 
-        ninjaNome = link.attr("ninjaNome");
+        classificacaoNome = link.attr("classificacaoNome");
         $("#yesBtn").attr("href", link.attr("href"));
-        $("#confirmText").html("Deseja excluir o ninja \<strong\>" + ninjaNome + "\<\/strong\>?");
+        $("#confirmText").html("Deseja excluir a classificação \<strong\>" + classificacaoNome + "\<\/strong\>?");
         $("#confirmModal").modal();
       });
 
       $("#btnClear").on("click", function (e) {
         e.preventDefault();
         $("#keyword").text("");
-        window.location = "[[@{/ninjas}]]";
+        window.location = "[[@{/classificacoes}]]";
       });
     });
 

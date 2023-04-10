@@ -20,44 +20,46 @@ paths:
     get:
       tags:
         - ninja-rest-controller
-      summary: getNinjas
-      operationId: getNinjasUsingGET
-      produces:
-        - '*/*'
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Ninja'
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
-      deprecated: false
-  /api/ninjas/{id}:
-    get:
-      tags:
-        - ninja-rest-controller
-      summary: getNinja
-      operationId: getNinjaUsingGET
+      summary: getAllNinjasPage
+      operationId: getAllNinjasPageUsingGET
       produces:
         - '*/*'
       parameters:
-        - name: id
-          in: path
-          description: id
-          required: true
+        - name: name
+          in: query
+          description: name
+          required: false
+          type: string
+        - name: page
+          in: query
+          description: page
+          required: false
           type: integer
-          format: int64
+          default: 0
+          format: int32
+        - name: size
+          in: query
+          description: size
+          required: false
+          type: integer
+          default: 3
+          format: int32
+        - name: sort
+          in: query
+          description: sort
+          required: false
+          type: array
+          items:
+            type: string
+          collectionFormat: multi
+          default: id,desc
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/Ninja'
+            type: object
+            additionalProperties:
+              type: object
         '401':
           description: Unauthorized
         '403':
@@ -65,35 +67,3 @@ paths:
         '404':
           description: Not Found
       deprecated: false
-definitions:
-  ClasseNinja:
-    type: object
-    properties:
-      id:
-        type: integer
-        format: int64
-      nome:
-        type: string
-    title: ClasseNinja
-  Ninja:
-    type: object
-    properties:
-      classe:
-        $ref: '#/definitions/ClasseNinja'
-      id:
-        type: integer
-        format: int64
-      nome:
-        type: string
-      vila:
-        $ref: '#/definitions/Vila'
-    title: Ninja
-  Vila:
-    type: object
-    properties:
-      id:
-        type: integer
-        format: int64
-      nome:
-        type: string
-    title: Vila
