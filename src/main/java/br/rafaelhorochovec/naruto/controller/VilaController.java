@@ -1,60 +1,105 @@
 package br.rafaelhorochovec.naruto.controller;
 
-import java.util.List;
-
+import br.rafaelhorochovec.naruto.model.Vila;
+import br.rafaelhorochovec.naruto.repository.VilaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import br.rafaelhorochovec.naruto.model.Vila;
-import br.rafaelhorochovec.naruto.service.VilaService;
+import java.util.List;
 
 @Controller
-@RequestMapping("/vilas")
 public class VilaController {
 
 	@Autowired
-	private VilaService vilaService;
+	private VilaRepository vilaRepository;
 
-	@RequestMapping("/")
-	public String viewHomePage(Model model) {
-		model.addAttribute("titulo", "Vilas");
-		List<Vila> vilas = vilaService.listAll();
-		model.addAttribute("vilas", vilas);
+	@GetMapping("/vilas")
+	public String getAll(Model model, @RequestParam(required = false) String keyword,
+						 @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
+		try {
+			List<Vila> vilas;
+			Pageable paging = PageRequest.of(page - 1, size);
+
+			Page<Vila> pageVille;
+			if (keyword == null) {
+				pageVille = vilaRepository.findAll(paging);
+			} else {
+				pageVille = vilaRepository.findByNomeContainingIgnoreCase(keyword, paging);
+				model.addAttribute("keyword", keyword);
+			}
+
+			vilas = pageVille.getContent();
+
+			model.addAttribute("vilas", vilas);
+			model.addAttribute("currentPage", pageVille.getNumber() + 1);
+			model.addAttribute("totalItems", pageVille.getTotalElements());
+			model.addAttribute("totalPages", pageVille.getTotalPages());
+			model.addAttribute("pageSize", size);
+			model.addAttribute("pageTitle", "Vilas");
+		} catch (Exception e) {
+			model.addAttribute("message", e.getMessage());
+		}
 		return "vilas";
 	}
 
-	@RequestMapping("/nova")
-	public String showNewVilaPage(Model model) {
+	@GetMapping("/vilas/new")
+	public String addVila(Model model) {
 		Vila vila = new Vila();
+		
 		model.addAttribute("vila", vila);
-		model.addAttribute("titulo", "Nova Vila");
+		model.addAttribute("pageTitle", "Create new Vila");
+		
 		return "vila_form";
 	}
 
-	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
-	public String saveVila(@ModelAttribute("vila") Vila vila) {
-		vilaService.save(vila);
-		return "redirect:/vilas/";
+	@PostMapping("/vilas/save")
+	public String saveVila(Vila vila, RedirectAttributes redirectAttributes) {
+		try {
+			vilaRepository.save(vila);
+
+			redirectAttributes.addFlashAttribute("message", "A Vila foi salva com sucesso!");
+		} catch (Exception e) {
+			redirectAttributes.addAttribute("message", e.getMessage());
+		}
+
+		return "redirect:/vilas";
 	}
-	
-	@RequestMapping("/editar/{id}")
-	public ModelAndView showEditVilaPage(@PathVariable(name = "id") Long id, Model model) {
-		model.addAttribute("titulo", "Editar Vila (ID: " + id + ")");
-	    ModelAndView mav = new ModelAndView("vila_form");
-	    Vila vila = vilaService.get(id);
-	    mav.addObject("vila", vila);
-	    return mav;
+
+	@GetMapping("/vilas/{id}")
+	public String editVila(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
+		try {
+			Vila vila = vilaRepository.findById(id).get();
+
+			model.addAttribute("vila", vila);
+			model.addAttribute("pageTitle", "Alterar Vila (ID: " + id + ")");
+
+			return "vila_form";
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("message", e.getMessage());
+
+			return "redirect:/vilas";
+		}
 	}
-	
-	@RequestMapping("/excluir/{id}")
-	public String deleteVila(@PathVariable(name = "id") Long id) {
-	    vilaService.delete(id);
-	    return "redirect:/vilas/";       
+
+	@GetMapping("/vilas/delete/{id}")
+	public String deleteVila(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
+		try {
+			vilaRepository.deleteById(id);
+
+			redirectAttributes.addFlashAttribute("message", "A Vila com id=" + id + " foi deletado com sucesso!");
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("message", e.getMessage());
+		}
+
+		return "redirect:/vilas";
 	}
 }

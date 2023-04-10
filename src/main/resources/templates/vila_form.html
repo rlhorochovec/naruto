@@ -4,31 +4,29 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
-	<title>Naruto</title>
+	<title>Naruto - Spring Boot Thymeleaf example</title>
 
 	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-		  integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
-		  crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
+
 <body>
 <div th:replace="fragments/header :: header"></div>
 
 <div class="container-fluid">
-	<h2 class="text-center">[[${titulo}]]</h2>
+	<h2 class="text-center">[[${pageTitle}]]</h2>
 
 	<div class="my-3">
-		<form th:action="@{/vilas/salvar}" method="post" enctype="multipart/form-data" th:object="${vila}"
+		<form th:action="@{/vilas/save}" method="post" enctype="multipart/form-data" th:object="${vila}"
 			  style="max-width: 550px; margin: 0 auto">
 
 			<input type="hidden" th:field="*{id}" />
 
 			<div class="p-3">
 				<div class="form-group row">
-					<label class="col-sm-3 col-form-label" for="nome">Nome</label>
+					<label class="col-sm-3 col-form-label" for="nome">Nome:</label>
 					<div class="col-sm-9">
 						<input type="text" th:field="*{nome}" required minlength="2" maxlength="128" class="form-control"
 							   id="nome" />
@@ -46,13 +44,13 @@
 
 <div th:replace="fragments/footer :: footer"></div>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-      $("#btnCancel").on("click", function () {
-        window.location = "[[@{/}]]";
-      });
-    });
-  </script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+		  $("#btnCancel").on("click", function () {
+			window.location = "[[@{/vilas}]]";
+		  });
+		});
+  	</script>
 
 </body>
 </html>
