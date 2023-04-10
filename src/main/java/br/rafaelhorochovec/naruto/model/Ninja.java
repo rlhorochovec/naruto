@@ -1,56 +1,25 @@
 package br.rafaelhorochovec.naruto.model;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import javax.persistence.*;
 
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Ninja {
-	
-	private Long id;
-	private String nome;
-	private ClasseNinja classe;
-	private Vila vila;
+@Getter
+@Setter
+@NoArgsConstructor
+public class Ninja extends Auditoria {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	public ClasseNinja getClasse() {
-		return classe;
-	}
-
-	public void setClasse(ClasseNinja classe) {
-		this.classe = classe;
-	}
+	private Long id;
+	private String nome;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	public Vila getVila() {
-		return vila;
-	}
+	private Classificacao classificacao;
 
-	public void setVila(Vila vila) {
-		this.vila = vila;
-	}
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Vila vila;
 }
