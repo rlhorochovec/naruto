@@ -56,7 +56,7 @@ public class VilaController {
 		Vila vila = new Vila();
 		
 		model.addAttribute("vila", vila);
-		model.addAttribute("pageTitle", "Create new Vila");
+		model.addAttribute("pageTitle", "Nova Vila");
 		
 		return "vila_form";
 	}
