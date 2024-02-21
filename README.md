@@ -22,5 +22,5 @@ Baixando as dependências
 - http://localhost:8080/api/ninjas
 
 ## Screenshots
-<img src="https://github.com/rlhorochovec/naruto/blob/develop/screenshots/ninjas.png" width="400" /> <img src="https://github.com/rlhorochovec/naruto/blob/develop/screenshots/ninjas_pesquisa.png" width="400" />
-<img src="https://github.com/rlhorochovec/naruto/blob/develop/screenshots/ninjas_novo.png" width="400" /> <img src="https://github.com/rlhorochovec/naruto/blob/develop/screenshots/ninjas_api.png" width="400" />
+<img src="https://github.com/rlhorochovec/naruto/blob/develop/screenshots/ninjas.PNG" width="400" /> <img src="https://github.com/rlhorochovec/naruto/blob/develop/screenshots/ninjas_pesquisa.PNG" width="400" />
+<img src="https://github.com/rlhorochovec/naruto/blob/develop/screenshots/ninjas_novo.PNG" width="400" /> <img src="https://github.com/rlhorochovec/naruto/blob/develop/screenshots/ninjas_api.PNG" width="400" />
